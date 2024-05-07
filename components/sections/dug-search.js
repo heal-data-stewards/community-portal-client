@@ -1,19 +1,63 @@
 import React, { useRef, useState } from "react"
-import Paper from "@mui/material/Paper"
-import InputBase from "@mui/material/InputBase"
-import ButtonBase from "@mui/material/ButtonBase"
-import Typography from "@mui/material/Typography"
-import Box from "@mui/material/Box"
+import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import InputBase from '@material-ui/core/InputBase';
+import ButtonBase from "@material-ui/core/ButtonBase"
+import Typography from "@material-ui/core/Typography"
+import Box from "@material-ui/core/Box"
+
+const useStyles = makeStyles({
+  root: {
+    margin: "0 0 3rem",
+    padding: "3rem 0 3.5rem",
+    backgroundColor: "#53256510",
+  },
+  feedbackLine: {
+    color: "#982568"
+  },
+  title: {
+    color: "#982568", 
+    fontSize: "1.5rem",
+  },
+  searchBox: {
+    display: "flex",
+    alignItems: "center",
+    width: "100%",
+  },
+  textInputBox: {
+    padding: "0.5rem 1rem", 
+    marginLeft: 1, 
+    flex: 1, 
+    fontFamily: "Montserrat"
+  },
+  searchButton: {
+    backgroundColor: "#982568",
+    height: "100%",
+    padding: "1rem 1rem",
+    color: "#FFF",
+    borderRadius: "0 4px 4px 0",
+    transition:
+      "background-color 500ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+    transition: "color 500ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+    "&:hover, &.Mui-focusVisible": {
+      backgroundColor: "#98256899",
+    },
+  }
+});
 
 const FeedbackLine = ({ message }) => {
+  const classes = useStyles();
+
   return (
-    <Typography variant="caption" sx={{ color: "#982568" }}>
+    <Typography variant="caption" className={classes.feedbackLine}>
       {message}
     </Typography>
   )
 }
 
 const DugSearch = ({ data }) => {
+  const classes = useStyles();
+
   const inputField = useRef()
   const [errorMessage, setErrorMessage] = useState("")
 
@@ -49,18 +93,12 @@ const DugSearch = ({ data }) => {
   }
 
   return (
-    <Box
-      sx={{
-        margin: "0 0 3rem",
-        padding: "3rem 0 3.5rem",
-        backgroundColor: "#53256510",
-      }}
-    >
+    <Box className={classes.root}>
       <div className="prose-lg container event-html text-gray-dark text-xl">
         <Typography
           variant="h3"
           gutterBottom
-          sx={{ color: "#982568", fontSize: "1.5rem" }}
+          className={classes.title}
         >
           {data.title}
         </Typography>
@@ -68,15 +106,11 @@ const DugSearch = ({ data }) => {
           component="form"
           noValidate
           autoComplete="off"
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            width: "100%",
-          }}
+          className={classes.searchBox}
           onSubmit={doSearch}
         >
           <InputBase
-            sx={{ p: "0.5rem 1rem", ml: 1, flex: 1, fontFamily: "Montserrat" }}
+            className={classes.textInputBox}
             placeholder={data.placeholder}
             inputProps={{ "aria-label": `${data.placeholder}` }}
             inputRef={inputField}
@@ -87,20 +121,7 @@ const DugSearch = ({ data }) => {
             onSubmit={() => {
               doSearch
             }}
-            sx={{
-              backgroundColor: "#982568",
-              height: "100%",
-              padding: "1rem 1rem",
-              color: "#FFF",
-              borderRadius: "0 4px 4px 0",
-              transition:
-                "background-color 500ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
-              transition: "color 500ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
-              "&:hover, &.Mui-focusVisible": {
-                backgroundColor: "#98256830",
-                color: "#532565",
-              },
-            }}
+            className={classes.searchButton}
           >
             {data.buttonText}
           </ButtonBase>
